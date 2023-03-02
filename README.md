@@ -1,46 +1,46 @@
-# Getting Started with Create React App
+# 리액트 타입스크립트 템플릿(React Typescript Template)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+리액트 타입스크립트 템플릿에 리덕스(Redux)를 적용하는 템플릿을 작성합니다.
 
-## Available Scripts
+## 액션(Action)
 
-In the project directory, you can run:
+상태(State)에 어떤 변화를 발생시키는 역할을 합니다.
+`type` 속성을 필수적으로 가지고 있어야 합니다.
+리듀서에서 액션 타입을 구분합니다.
 
-### `npm start`
+## 액션 생성 함수(Action Creator)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+컴포넌트에서 더욱 쉽게 액션을 발생시키기 위해 사용합니다.
+액션을 만드는 함수로 파라미터를 받아와서 액션 객체 타입으로 만듭니다.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 리듀서(Reducer)
 
-### `npm test`
+상태(State)를 변화 시키는 함수입니다. 매개변수로 이전 상태, 전달 받은 액션를 받습니다.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 스토어(Store)
 
-### `npm run build`
+애플리케이션 당 한개가 존재하고 현재 앱 상태를 보관합니다.  
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 스토어 디스패치(Store-Dispatch)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+스토어 내장 함수로 액션을 발생 시키는 역할을 합니다.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 스토어 구독(Store-Subscribe)
 
-### `npm run eject`
+스토어 내장 함수로 함수 형태의 값을 매개변수로 받습니다.
+특정 함수를 전달하면 액션이 디스패치(발생)되었을때 전달해준 함수가 호출
+`Connect`, `useSelector` 등 Hook 사용하여 리덕스 스토어 상태 구독합니다.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### 리덕스 3가지 규칙
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. 하나의 애플리케이션 안에는 하나의 스토어를 가집니다.
+2. 상태(State)는 읽기 전용 입니다.
+3. 변화를 일으키는 함수, 리듀서는 순서한 함수입니다.
+    * 리듀서는 이전 상태와 액션 객체를 매개변수로 받습니다.
+    * 이전 상태 건들이지 않고 새로운 상태를 만든다.
+    * 동일한 입력에 대한 동일 출력이 보장되어야 합니다. 아닐 경우 미들웨어를 사용합니다.
+    * 비동기 처리 등
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 컴포넌트(Component)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+리덕스 스토어에 직접 접근하지 않고 필요한 값 또는 함수를 컨테이너로부터 매개 변수(Props)로 받아와서 사용합니다.
