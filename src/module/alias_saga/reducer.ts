@@ -15,7 +15,7 @@ const InitState: DataState = {
   },
 };
 
-const ReducerSaga = createReducer<DataState, DataAction>(InitState, {
+const SagaReducer = createReducer<DataState, DataAction>(InitState, {
   [DATA]: (state) => ({
     ...state,
     appData: {
@@ -42,4 +42,4 @@ const ReducerSaga = createReducer<DataState, DataAction>(InitState, {
   }),
 });
 
-export default ReducerSaga;
+export default SagaReducer;

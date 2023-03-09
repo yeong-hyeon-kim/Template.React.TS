@@ -9,6 +9,10 @@ export const DATA_SUCCESS = "SUCCESS";
 export const DATA_ERROR = "ERROR";
 
 // 액션 타입을 지정합니다.
+// createAsyncAction
+// - request
+// - success
+// - failure
 export const DATA_AsyncActions = createAsyncAction(
   DATA,
   DATA_SUCCESS,
