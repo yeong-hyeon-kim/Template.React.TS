@@ -5,11 +5,18 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import rootReducer from "./module";
+import rootReducer, { rootSaga } from "./module";
+import createSagaMiddleware from "@redux-saga/core";
 
+// Redux-Saga 미들웨어 사용
+const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
   reducer: rootReducer,
+  middleware: [sagaMiddleware],
 });
+
+// 사가 루트 리듀서
+sagaMiddleware.run(rootSaga);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
