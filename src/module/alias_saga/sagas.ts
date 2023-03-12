@@ -3,6 +3,7 @@ import { DATA_AsyncActions, DATA } from "./actions";
 import { call, put, takeEvery } from "redux-saga/effects";
 import { GetData, IData } from "../../api/data";
 
+// SUCCESS, ERROR 여부에 따라 액션 발생
 function* GetDataSaga(action: ReturnType<typeof DATA_AsyncActions.request>) {
   try {
     const appData: IData = yield call(GetData, action.payload);
