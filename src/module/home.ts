@@ -1,3 +1,5 @@
+/* 리덕스 기본 리듀서 */
+
 /* 액션 타입 */
 const TITLE = "home/TITLE" as const;
 
@@ -10,6 +12,8 @@ export const actionFuncTitle = () => ({
 type typeHome = ReturnType<typeof actionFuncTitle>;
 
 /* 리덕스(Redux) 상태(State) */
+// 상태 타입 정의
+// 루트 리듀서에서 해당 상태의 타입을 추론할 때도 사용
 type stateType = { title: string };
 
 /* 상태(State) 초기화(Init) */
