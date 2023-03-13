@@ -1,42 +1,125 @@
-# 리액트 타입스크립트 템플릿(React Typescript Template)
+# React Typescript Template
 
-리액트 타입스크립트 템플릿에 리덕스(Redux)를 적용하는 템플릿을 작성합니다.
+React Typescript With Redux
 
-## 액션(Action)
+## Using
 
-상태(State)에 어떤 변화를 발생시키는 역할을 합니다.
-`type` 속성을 필수적으로 가지고 있어야 합니다.
-리듀서에서 액션 타입을 구분합니다.
+### 1. Compoents
 
-## 액션 생성 함수(Action Creator)
+  ``` typescript
+  type prosType = {
+    Title: string;
+  };
 
-컴포넌트에서 더욱 쉽게 액션을 발생시키기 위해 사용합니다.
-액션을 만드는 함수로 파라미터를 받아와서 액션 객체 타입으로 만듭니다.
+  function Home({Title}){
+    return (
+      <div>
+        <h1>{Title}</h1>
+      </div>
+    );
+  }
+  
+  export default Home;
+  ```
 
-## 리듀서(Reducer)
+### 2. Reducers
 
-상태(State)를 변화시키는 함수입니다. 매개변수로 이전 상태, 전달 받은 액션를 받습니다.
+* A. Component Reduce
 
-* 리듀서는 상태를 변화시키는 동작 이외 다른 작업(비동기 처리)은 미들웨어를 사용해야합니다.
+  ``` typescript
+    // Action Type
+    const TITLE = "home/TITLE" as const;
 
-### 리듀서는 순수 함수
+    // Action Creation Function
+    export const actionFuncTitle = () => ({
+      type: TITLE,
+    });
 
-* 부수효과가 없는 함수 즉, 어떤 함수에 동일한 인자를 주었을 때 항상 같은 값을 리턴하는 함수
-또는 외부의 상태를 변경하지 않는 함수
+    type typeHome = ReturnType<typeof actionFuncTitle>;
 
-## 스토어(Store)
+    // State Type
+    type stateType = {
+      title: string;
+    };
 
-하나의 애플리케이션 안에는 하나의 스토어를 가지고 현재 상태를 보관합니다.  
+    // Init State
+    const stateHome = {
+      title: "Hello World!",
+    };
 
-### 내장 함수(Built In Function)
+    /* Reducer */
+    function Home(state: stateType = stateHome, action: typeHome): stateType {
+      switch (action.type) {
+        case TITLE:
+          return {
+            title: state.title,
+            data: SensorDatas,
+          };
 
-* 디스패치(Store-Dispatch)
-  * 액션을 발생 시키는 역할을 합니다.
-* 구독(Store-Subscribe)
-  * 스토어 내장 함수로 함수 형태의 값을 매개변수로 받습니다.
-  * 특정 함수를 전달하면 액션이 디스패치(발생)되었을때 전달해준 함수가 호출
-  * `Connect`, `useSelector` 등 훅(Hook) 사용하여 리덕스 스토어 상태 구독합니다.
+        default:
+          return state;
+      }
+    }
 
-## 컴포넌트(Component)
+    export default Home;
+  ```
 
-리덕스 스토어에 직접 접근하지 않고 필요한 값 또는 함수를 컨테이너로부터 매개 변수(Props)로 받아와서 사용합니다.
+* B. Root Reducer
+
+  ``` typescript
+    import { combineReducers } from "redux";
+    import Home from "./home";
+
+    const rootReducer = combineReducers({ Home });
+
+    export default rootReducer;
+    export type RootState = ReturnType<typeof rootReducer>;
+
+  ```
+
+### 3. Containers
+
+  ``` typescript
+    function HomeContainer() {
+      // Get State Value
+      const Title = useSelector((state: RootState) => state.Home.title);
+
+      // Call Action Function
+      const updateData = () => {
+        dispatch(actionFuncTitle());
+      };
+
+      retturn(
+        // Get Component
+       <Home element={Title}></Home>
+      )
+    }
+
+    export default HomeContainer;
+  ```
+
+### 4. Store
+
+* ConfigureStore
+
+  ``` typescript
+  import { configureStore } from "@reduxjs/toolkit";
+  // Get Reducers
+  import rootReducer from "./module";
+
+  const store = configureStore({
+    reducer: rootReducer,
+  });
+
+  root.render(
+    <Provider store={store}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </Provider>
+  );
+  ```
+
+## License
+
+React Typescript Template is [MIT licensed](./Lisense).
